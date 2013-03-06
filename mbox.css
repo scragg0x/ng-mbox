@@ -1,0 +1,29 @@
+#mbox .msg-box {
+    height: 300px;
+}
+
+#mbox .chk-col {
+    width: 25px;
+    vertical-align: middle;
+    line-height: 20px;
+}
+
+#mbox .conv-tbl {
+    background-color:#FAFAFA;
+}
+
+#mbox .conv-tbl input {
+    margin: 0px;
+}
+
+#mbox .name-col {
+    width: 150px;
+}
+
+#mbox .conv-tbl tr.selected {
+    background-color: #FFE;
+}
+
+#mbox .nav-tabs {
+    margin-bottom: 5px;
+}
