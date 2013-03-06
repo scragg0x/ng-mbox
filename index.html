@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="mbox">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -20,7 +20,7 @@
     <div ng-controller="MboxCtrl">
         <ul class="nav nav-tabs">
             <li ng-repeat="box in boxes" ng-class="{active: box.name==activeBox}">
-                <a href="" ng-click="activateBox(box)" data-toggle="tab" data-target="#{{box.name}}">{{box.name}} ({{convs[box.name].length}})</a>
+                <a ng-href="#/{{box.name}}" ng-click="activateBox(box)" data-toggle="tab" data-target="#{{box.name}}">{{box.name}} ({{convs[box.name].length}})</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -122,7 +122,7 @@
                         <tr ng-repeat="conv in convs[box.name]" ng-class="{selected: conv.selected}">
                             <td><input type="checkbox" ng-model="conv.selected" /></td>
                             <td>{{formatConvName(conv, box)}}</td>
-                            <td>{{conv.subject}}</td>
+                            <td><a ng-href="#{{box.name}}/{{conv.id}}">{{conv.subject}}</a></td>
                         </tr>
                     </table>
                 </div>
@@ -130,14 +130,19 @@
         </div>
         </div>
         <h4>Compose</h4>
-            <form ng-submit="addConv('Sent')">
-                <div><input type="text" ng-model="to" placeholder="To" class='span6' /></div>
-                <div><input type="text" ng-model="subject" placeholder="Subject" class='span6' /></div>
-                <div><textarea ng-model='text' placeholder="Message" class='span6 msg-box'></textarea></div>
-                <div><input class="btn" type="submit" value="Send" /></div>
-            </form>
+        <form ng-submit="addConv('Sent')">
+            <div><input type="text" ng-model="to" placeholder="To" class='span6' /></div>
+            <div><input type="text" ng-model="subject" placeholder="Subject" class='span6' /></div>
+            <div><textarea ng-model='text' placeholder="Message" class='span6 msg-box'></textarea></div>
+            <div><input class="btn" type="submit" value="Send" /></div>
+        </form>
+        <div ng-view></div>
+        <pre>$location.path() = {{$location.path()}}</pre>
+        <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
+        <pre>$route.current.params = {{$route.current.params}}</pre>
+        <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
+        <pre>$routeParams = {{$routeParams}}</pre>
     </div>
-
 </div>
 </body>
 </html>

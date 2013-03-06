@@ -16,12 +16,17 @@
     margin: 0px;
 }
 
+#mbox .conv-tbl tr:hover {
+    background-color:#FFE;
+    cursor: pointer;
+}
+
 #mbox .name-col {
     width: 150px;
 }
 
 #mbox .conv-tbl tr.selected {
-    background-color: #FFE;
+    background-color: #EFE;
 }
 
 #mbox .nav-tabs {

@@ -1,7 +1,18 @@
 User = {};
 User.username = "Joe";
 
-function MboxCtrl($scope) {
+angular.module('mbox', [], function($routeProvider, $locationProvider) {
+    $routeProvider.when('/:box_name/:conv_id', {
+        templateUrl: 'conv.html',
+        controller: ConvCtrl
+    });
+});
+
+function MboxCtrl($scope, $route, $routeParams, $location) {
+    $scope.$route = $route;
+    $scope.$location = $location;
+    $scope.$routeParams = $routeParams;
+
     $scope.activeBox = 'Inbox';
 
     $scope.boxes = [
@@ -62,18 +73,26 @@ function MboxCtrl($scope) {
         });
     };
 
+    $scope.go = function (hash) {
+        $location.hash(hash);
+    };
+
     $scope.formatConvName = function(conv, box){
         var r = "";
         if (box.name === 'Sent'){
             r += "To: " + conv.to;
         } else {
-            r += conv.from
+            r += conv.from;
         }
         if (conv.msg_count > 1){
             r +=  " (" + conv.msg_count + ")";
         }
-        return r
+        return r;
     };
+}
+
+function ConvCtrl($scope, $routeParams){
+    $scope.params = $routeParams;
 }
 
 function random(x, y){
@@ -81,5 +100,5 @@ function random(x, y){
         y = x;
         x = 0;
     }
-    return Math.floor((Math.random()*(y-x))+y)
+    return Math.floor((Math.random()*(y-x))+y);
 }
