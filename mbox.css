@@ -27,3 +27,8 @@
 #mbox .nav-tabs {
     margin-bottom: 5px;
 }
+
+
+.clr {
+    clear: both;
+}

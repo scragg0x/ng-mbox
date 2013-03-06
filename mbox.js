@@ -1,8 +1,4 @@
-$(function () {
-    $("[rel=tooltip]").tooltip();
-});
-
-User = {}
+User = {};
 User.username = "Joe";
 
 function MboxCtrl($scope) {
@@ -21,14 +17,15 @@ function MboxCtrl($scope) {
             {subject: 'Hello', from: 'Scragg', to: 'Joe', msg_count: 2, id: 1},
             {subject: 'Bro!', from: 'Seminull', to: 'Joe', msg_count: 1, id: 2}
         ],
-        Sent: [],
+        Sent: [{subject: 'hey!', from: 'Joe', to: 'Mark', msg_count: 1, id: 3}],
         Archive: [],
         Spam: [],
         Trash: []
     };
 
     $scope.msgs = {
-        1: [{text: 'hello!'}, {text: 'whats up!'}]
+        1: [{text: 'hello!'}, {text: 'whats up!'}],
+        3: [{text: 'what is your favorite color?'}]
     };
 
     $scope.activateBox = function(box){

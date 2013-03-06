@@ -3,10 +3,16 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <!--<script src="ui-bootstrap-tpls-0.2.0.min.js"></script>-->
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <script src="mbox.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="mbox.css" rel="stylesheet">
+    <script>
+        $(function() {
+            $("[rel=tooltip]").tooltip();
+        });
+    </script>
 </head>
 <body>
 <div id="mbox" class='container'>
@@ -14,7 +20,7 @@
     <div ng-controller="MboxCtrl">
         <ul class="nav nav-tabs">
             <li ng-repeat="box in boxes" ng-class="{active: box.name==activeBox}">
-                <a href="" ng-click="activateBox(box)" data-toggle="tab" data-target="#{{box.name}}">{{box.name}}</a>
+                <a href="" ng-click="activateBox(box)" data-toggle="tab" data-target="#{{box.name}}">{{box.name}} ({{convs[box.name].length}})</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -23,6 +29,15 @@
             <div ng-switch on="activeBox">
                 <div ng-switch-when="Inbox">
                     <div class="btn-toolbar">
+
+                        <div class="btn-group">
+                            <a class="btn" href="#"><i class="icon-check"></i></a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-pencil"></i> Not Done</a></li>
+                            </ul>
+                        </div>
+
                         <div class="btn-group">
                             <a ng-click="moveConv(box, 'Archive')" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
                             <a ng-click="moveConv(box, 'Trash')" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
@@ -31,10 +46,25 @@
                     </div>
                 </div>
                 <div ng-switch-when="Sent">
-
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a class="btn" href="#"><i class="icon-check"></i></a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-pencil"></i> Not Done</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div ng-switch-when="Archive">
                     <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a class="btn" href="#"><i class="icon-check"></i></a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-pencil"></i> Not Done</a></li>
+                            </ul>
+                        </div>
                         <div class="btn-group">
                             <a ng-click="moveConv(box, 'Inbox')" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
                             <a ng-click="moveConv(box, 'Trash')" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
@@ -45,6 +75,13 @@
                 <div ng-switch-when="Spam">
                     <div class="btn-toolbar">
                         <div class="btn-group">
+                            <a class="btn" href="#"><i class="icon-check"></i></a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-pencil"></i> Not Done</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
                             <a ng-click="moveConv(box, 'Inbox')" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
                             <a ng-click="moveConv(box, 'Archive')" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
                             <a ng-click="moveConv(box, 'Trash')" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
@@ -54,6 +91,13 @@
                 <div ng-switch-when="Trash">
                     <div class="btn-toolbar">
                         <div class="btn-group">
+                            <a class="btn" href="#"><i class="icon-check"></i></a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-pencil"></i> Not Done</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
                             <a ng-click="moveConv(box, 'Inbox')" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
                             <a ng-click="moveConv(box, 'Archive')" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
                             <a ng-click="moveConv(box, 'Spam')" class="btn" href="#" data-toggle="tooltip" title="Spam" data-placement="bottom" data-container='body'><i class="icon-exclamation-sign"></i> Spam</a>
@@ -62,18 +106,27 @@
                 </div>
             </div>
 
-            <table class='table conv-tbl'>
-                <colgroup>
-                    <col class='chk-col' />
-                    <col class='name-col' />
-                    <col class='subject-col' />
-                </colgroup>
-                <tr ng-repeat="conv in convs[box.name]" ng-class="{selected: conv.selected}">
-                    <td><input type="checkbox" ng-model="conv.selected" /></td>
-                    <td>{{formatConvName(conv, box)}}</td>
-                    <td>{{conv.subject}}</td>
-                </tr>
-            </table>
+            <div ng-switch on="convs[box.name].length">
+                <div ng-switch-when="0">
+                    <div class='well well-large'>
+                        Box is empty!
+                    </div>
+                </div>
+                <div ng-switch-default>
+                    <table class='table conv-tbl'>
+                        <colgroup>
+                            <col class='chk-col' />
+                            <col class='name-col' />
+                            <col class='subject-col' />
+                        </colgroup>
+                        <tr ng-repeat="conv in convs[box.name]" ng-class="{selected: conv.selected}">
+                            <td><input type="checkbox" ng-model="conv.selected" /></td>
+                            <td>{{formatConvName(conv, box)}}</td>
+                            <td>{{conv.subject}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
         </div>
         <h4>Compose</h4>
