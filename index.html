@@ -19,33 +19,37 @@
     <h2>M-Box</h2>
     <div ng-controller="MboxCtrl">
         <ul class="nav nav-tabs">
-            <li ng-repeat="box in boxes" ng-class="{active: box.name==activeBox}">
-                <a ng-href="#/{{box.name}}" ng-click="activateBox(box)" data-toggle="tab" data-target="#{{box.name}}">{{box.name}} ({{convs[box.name].length}})</a>
+            <li ng-repeat="folder in folders" ng-class="{active: folder.id==active_folder}">
+                <a ng-href="#/{{folder.name}}" ng-click="activateFolder(folder)" data-toggle="tab" data-target="#{{folder.id}}">{{folder.name}} ({{getConvCount(folder)}})</a>
             </li>
         </ul>
         <div class="tab-content">
-        <div ng-repeat="box in boxes" id="{{box.name}}" class="tab-pane" ng-class="{active: box.name==activeBox}">
+        <div ng-repeat="folder in folders" id="{{folder.name}}" class="tab-pane" ng-class="{active: folder.id==active_folder}">
 
-            <div ng-switch on="activeBox">
-                <div ng-switch-when="Inbox">
+            <div ng-switch on="active_folder">
+                <div ng-switch-when="1">
                     <div class="btn-toolbar">
 
-                        <div class="btn-group">
-                            <a class="btn" href="#"><i class="icon-check"></i></a>
-                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><i class="icon-pencil"></i> Not Done</a></li>
-                            </ul>
-                        </div>
+                        <a class="btn btn-primary" href="#"><i class="icon-pencil icon-white"></i> Compose</a>
 
                         <div class="btn-group">
-                            <a ng-click="moveConv(box, 'Archive')" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
-                            <a ng-click="moveConv(box, 'Trash')" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
-                            <a ng-click="moveConv(box, 'Spam')" class="btn" href="#" data-toggle="tooltip" title="Spam" data-placement="bottom" data-container='body'><i class="icon-exclamation-sign"></i> Spam</a>
+                            <a class="btn" href="#"><i class="icon-check"></i></a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-check"></i> All</a></li>
+                                <li><a href="#"><i class="icon-check"></i> None</a></li>
+                                <li><a href="#"><i class="icon-check"></i> Unread</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-group">
+                            <a ng-click="moveConv(folder, 3)" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
+                            <a ng-click="moveConv(folder, 5)" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
+                            <a ng-click="moveConv(folder, 4)" class="btn" href="#" data-toggle="tooltip" title="Spam" data-placement="bottom" data-container='body'><i class="icon-exclamation-sign"></i> Spam</a>
                         </div>
                     </div>
                 </div>
-                <div ng-switch-when="Sent">
+                <div ng-switch-when="2">
                     <div class="btn-toolbar">
                         <div class="btn-group">
                             <a class="btn" href="#"><i class="icon-check"></i></a>
@@ -56,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-switch-when="Archive">
+                <div ng-switch-when="3">
                     <div class="btn-toolbar">
                         <div class="btn-group">
                             <a class="btn" href="#"><i class="icon-check"></i></a>
@@ -66,13 +70,13 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <a ng-click="moveConv(box, 'Inbox')" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
-                            <a ng-click="moveConv(box, 'Trash')" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
-                            <a ng-click="moveConv(box, 'Spam')" class="btn" href="#" data-toggle="tooltip" title="Spam" data-placement="bottom" data-container='body'><i class="icon-exclamation-sign"></i> Spam</a>
+                            <a ng-click="moveConv(folder, 1)" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
+                            <a ng-click="moveConv(folder, 5)" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
+                            <a ng-click="moveConv(folder, 4)" class="btn" href="#" data-toggle="tooltip" title="Spam" data-placement="bottom" data-container='body'><i class="icon-exclamation-sign"></i> Spam</a>
                         </div>
                     </div>
                 </div>
-                <div ng-switch-when="Spam">
+                <div ng-switch-when="5">
                     <div class="btn-toolbar">
                         <div class="btn-group">
                             <a class="btn" href="#"><i class="icon-check"></i></a>
@@ -82,13 +86,13 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <a ng-click="moveConv(box, 'Inbox')" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
-                            <a ng-click="moveConv(box, 'Archive')" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
-                            <a ng-click="moveConv(box, 'Trash')" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
+                            <a ng-click="moveConv(folder, 1)" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
+                            <a ng-click="moveConv(folder, 3)" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
+                            <a ng-click="moveConv(folder, 4)" class="btn" href="#" data-toggle="tooltip" title="Trash" data-placement="bottom" data-container='body'><i class="icon-trash"></i> Trash</a>
                         </div>
                     </div>
                 </div>
-                <div ng-switch-when="Trash">
+                <div ng-switch-when="4">
                     <div class="btn-toolbar">
                         <div class="btn-group">
                             <a class="btn" href="#"><i class="icon-check"></i></a>
@@ -98,18 +102,18 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <a ng-click="moveConv(box, 'Inbox')" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
-                            <a ng-click="moveConv(box, 'Archive')" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
-                            <a ng-click="moveConv(box, 'Spam')" class="btn" href="#" data-toggle="tooltip" title="Spam" data-placement="bottom" data-container='body'><i class="icon-exclamation-sign"></i> Spam</a>
+                            <a ng-click="moveConv(folder, 1)" class="btn" href="#" data-toggle="tooltip" title="Inbox" data-placement="bottom" data-container='body'><i class="icon-inbox"></i> Inbox</a>
+                            <a ng-click="moveConv(folder, 3)" class="btn" href="#" data-toggle="tooltip" title="Archive" data-placement="bottom" data-container='body'><i class="icon-briefcase"></i> Archive</a>
+                            <a ng-click="moveConv(folder, 5)" class="btn" href="#" data-toggle="tooltip" title="Spam" data-placement="bottom" data-container='body'><i class="icon-exclamation-sign"></i> Spam</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div ng-switch on="convs[box.name].length">
+            <div ng-switch on="convs[folder.id].length">
                 <div ng-switch-when="0">
                     <div class='well well-large'>
-                        Box is empty!
+                        Folder is empty!
                     </div>
                 </div>
                 <div ng-switch-default>
@@ -119,10 +123,10 @@
                             <col class='name-col' />
                             <col class='subject-col' />
                         </colgroup>
-                        <tr ng-repeat="conv in convs[box.name]" ng-class="{selected: conv.selected}">
+                        <tr ng-repeat="conv in convs[folder.id]" ng-class="{selected: conv.selected, bold: conv.unread}">
                             <td><input type="checkbox" ng-model="conv.selected" /></td>
-                            <td>{{formatConvName(conv, box)}}</td>
-                            <td><a ng-href="#{{box.name}}/{{conv.id}}">{{conv.subject}}</a></td>
+                            <td>{{formatConvName(conv, folder)}}</td>
+                            <td><a ng-href="#{{folder.name}}/{{conv.id}}">{{conv.subject}}</a></td>
                         </tr>
                     </table>
                 </div>
